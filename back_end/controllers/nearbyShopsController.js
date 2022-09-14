@@ -53,20 +53,20 @@ exports.getShops = async (req, res, next) => {
     if (req.body.postcode) {
       const postcode = req.body.postcode;
       const placeType = req.body.type;
-      const radius = req.body.radius
-      console.log(postcode);
-
+      const radius = req.body.radius;
+      console.log("Postcode", postcode);
+      console.log("Type", placeType);
+      console.log("Radius", radius);
       const location = await getLocation(postcode);
       console.log("Location", location);
       const nearbyPlaces = await getPlaces(location, placeType, radius);
       res.status(200).json(nearbyPlaces);
-    }
-    else{
-        throw `please provide "postcode" in body`;
+    } else {
+      throw `please provide "postcode" in body`;
     }
   } catch (err) {
     res.status(400).json({
-      "error_message": err,
+      error_message: err,
     });
   }
 };
