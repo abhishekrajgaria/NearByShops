@@ -16,11 +16,12 @@ const getLocation = async function (postcode) {
       return location;
     }
   } catch (err) {
+    // console.error(err);
     throw err.response.data;
   }
 };
 
-const getPlaces = async function (locations, placeType, placeWithInRadius) {
+const getNearbyPlaces = async function (locations, placeType, placeWithInRadius) {
   let next_page_token;
   const nearbyPlaces = {
     method: "GET",
@@ -48,23 +49,20 @@ const getPlaces = async function (locations, placeType, placeWithInRadius) {
   }
 };
 
-exports.getShops = async (req, res, next) => {
+exports.getPlaces = async (req, res, next) => {
   try {
     if (req.body.postcode) {
       const postcode = req.body.postcode;
       const placeType = req.body.type;
       const radius = req.body.radius;
-      console.log("Postcode", postcode);
-      console.log("Type", placeType);
-      console.log("Radius", radius);
       const location = await getLocation(postcode);
-      console.log("Location", location);
-      const nearbyPlaces = await getPlaces(location, placeType, radius);
+      const nearbyPlaces = await getNearbyPlaces(location, placeType, radius);
       res.status(200).json(nearbyPlaces);
     } else {
       throw `please provide "postcode" in body`;
     }
   } catch (err) {
+    // console.error(err);
     res.status(400).json({
       error_message: err,
     });
