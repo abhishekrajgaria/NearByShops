@@ -1,0 +1,7 @@
+requirements for nodejs assgn.
+
+1. create service
+2. create exception handler
+3. create swagger
+4. use env variable
+5. perform sanitation of response, probably through the models.
